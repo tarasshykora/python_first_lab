@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 class Dishwasher:
     __instance = None
 
@@ -6,6 +8,10 @@ class Dishwasher:
         self.max_capacity = max_capacity
         self.current_capacity = current_capacity
         self.is_enabled = is_on
+
+    @abstractmethod
+    def get_power_consumption_per_cycle(self):
+        pass
 
     def load_dishes(self, count):
         if self.current_capacity + count > self.max_capacity:
@@ -22,18 +28,9 @@ class Dishwasher:
     def turn_off(self):
         return False
 
-    @staticmethod
-    def get_instance():
-        if Dishwasher.__instance is None:
-            Dishwasher.__instance = Dishwasher()
-        return Dishwasher.__instance
-
     def __str__(self):
-        return f"Dishwasher(model={self.model}, max_capacity={self.max_capacity}," \
-               f" current_capacity={self.current_capacity}, is_on={self.is_enabled})"
+        return f"Dishwasher: model = {self.model}, max_capacity = {self.max_capacity}," \
+               f" current_capacity = {self.current_capacity}, is_on = {self.is_enabled}"
 
 
-if __name__ == "__main__":
-    dishwashers = [Dishwasher("Bosch series 4", 14, 7, True), Dishwasher(), Dishwasher.get_instance(), Dishwasher.get_instance()]
-    for dishwasher in dishwashers:
-        print(dishwasher)
+
